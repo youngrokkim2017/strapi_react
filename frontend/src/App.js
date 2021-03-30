@@ -4,16 +4,16 @@ import Strapi from 'strapi-sdk-javascript/build/main';
 const strapi = new Strapi('http://localhost:1337');
 
 class App extends React.Component {
-  constructor() {
+  constructor(props) {
     super(props);
-    state = {
+    this.state = {
      posts: []
     }
   }
 
   async componentDidMount() {
     try {
-      const posts = await strapi.getEntries('blogpost')
+      const posts = await strapi.getEntries('posts')
       this.setState({ posts });
     } 
     catch(err) {
@@ -24,11 +24,11 @@ class App extends React.Component {
   render() {
     return (
       <section>
-        {this.state.posts.map(post => {
+        {this.state.posts.map(post => (
           <article>
            <div>Title: {post.title}</div>
            <div>Content: {post.content}</div></article>
-        })}
+        ))}
       </section>
     )
   }
