@@ -1,9 +1,10 @@
 import React from 'react';
+import Strapi from 'strapi-sdk-javascript/build/main';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Strapi from 'strapi-sdk-javascript/build/main';
+import Header from '../components/header/header';
 
 const strapi = new Strapi('http://localhost:1337');
 
@@ -68,7 +69,7 @@ class LandingContainer extends React.Component {
     //     ))}
     //   </section>
     <div className="flex flex-col min-h-screen justify-between">
-      {/* <Header data={data} /> */}
+      <Header data={posts} />
       <main className='container mx-auto px-4 sm:px-6 xl:px-6'>
         <div className="pb-12 mx-auto">
           <div>
@@ -88,7 +89,7 @@ class LandingContainer extends React.Component {
                     {document.author.name}
                   </p> */}
                   {/* <p>
-                    {handleDate(document.node.published_at)}
+                    {handleDate(document.published_at)}
                   </p> */}
                 </div>
               ))}
@@ -103,8 +104,8 @@ class LandingContainer extends React.Component {
           </h1>
             {/* <ul>
               {popularArticles.map(document => (
-                <li key={document.node.id} className="mt-4 pb-4 border-b" style={{ borderBottomColor: '#e2e2e2' }}>
-                  <Preview article={document.node} format="small" />
+                <li key={document.id} className="mt-4 pb-4 border-b" style={{ borderBottomColor: '#e2e2e2' }}>
+                  <Preview article={document} format="small" />
                 </li>
               ))}
             </ul> */}
