@@ -21,10 +21,16 @@ class ArticleTemplate extends React.Component {
             // debugger
             const postsData = await strapi.getEntries('posts')
             const authorsData = await strapi.getEntries('authors')
-            const categoriesData = await strapi.getEntries('category')
-            this.setState({ pposts: postsData });
-            this.setState({ authors: authorsData });
-            this.setState({ categories: categoriesData });
+            const categoriesData = await strapi.getEntries('categories')
+            // this.setState({ posts: postsData });
+            // this.setState({ authors: authorsData });
+            // this.setState({ categories: categoriesData });
+
+            this.setState({ 
+                posts: postsData, 
+                authors: authorsData, 
+                categories: categoriesData 
+            });
 
             // var sidebar = document.getElementById("sidebar");
             // var element = document.getElementById('metadata');
