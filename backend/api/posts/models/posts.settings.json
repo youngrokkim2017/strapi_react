@@ -14,6 +14,14 @@
     },
     "content": {
       "type": "richtext"
+    },
+    "author": {
+      "via": "posts",
+      "model": "authors"
+    },
+    "categories": {
+      "via": "posts",
+      "collection": "category"
     }
   }
 }

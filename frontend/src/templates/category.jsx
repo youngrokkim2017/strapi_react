@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react'
+import Strapi from 'strapi-sdk-javascript/build/main'
 import { Link } from "react-router-dom"
-import Layout from "../components/layout"
 // import ReactMarkdown from "react-markdown"
+
+const strapi = new Strapi('http://localhost:1337');
 
 const CategoryTemplate = () => {
 
-  const [data, setData] = useState([]);
+//   const [category, setCategory] = useState([]);
+//   const [authors, setAuthors] = useState([]);
 
-  useEffect(() => {
-    const posts = await strapi.getEntries('posts');
-    setData({ posts });
-  })
+    const category = strapi.getEntries('category');
+    const authors = strapi.getEntries('authors');
+
+//   useEffect(() => {
+//     const categoryData = strapi.getEntries('category');
+//     const authorsData = strapi.getEntries('authors');
+//     setCategory({ categoryData });
+//     setAuthors({ authorsData });
+//   })
 
   function handleDate(e) {
     var d = new Date(e);
@@ -24,7 +32,7 @@ const CategoryTemplate = () => {
 //     return (bDate - aDate)
 //   })
 
-  const sortedByDate = data;
+  const sortedByDate = category;
 
   const [list, setList] = useState([...sortedByDate.slice(0, 10)])
   // State to trigger load more
@@ -54,9 +62,9 @@ const CategoryTemplate = () => {
   }, [list]) //eslint-disable-line
 
   return (
-    <Layout>
+    <>
       <div className="px-4 sm:px-6 xl:px-6 mx-auto">
-        <h2 className="font-normal mb-8 pb-2 text-4xl leading-tight border-b border-black">{data.title}</h2>
+        <h2 className="font-normal mb-8 pb-2 text-4xl leading-tight border-b border-black">{category.title}</h2>
         <ul className="mb-12">
 
           {list.map(document => (
@@ -67,17 +75,18 @@ const CategoryTemplate = () => {
                     <h2 className="font-medium mb-2 text-2xl leading-none">{document.title}</h2>
                   </Link>
                   <p className='my-2'>
-                    {handleDate(document.published_at)}
+                    {/* {handleDate(document.published_at)} */}
+                    {handleDate(document.created_at)}
                   </p>
-                  {data.map(author => (
-                    <p className='mb-2 text-base' key={author.node.id}>
-                      {author.node.id.split("_")[1] === document.author ?
+                  {authors.map(author => (
+                    <p className='mb-2 text-base' key={author.id}>
+                      {author.id.split("_")[1] === document.author ?
                         <>
                           By <Link
                             className="font-medium underline"
-                            to={`/author/${author.node.name.split(" ").map((a) => a.toLowerCase()).join("-")}`}
+                            to={`/author/${author.name.split(" ").map((a) => a.toLowerCase()).join("-")}`}
                           >
-                            {author.node.name}
+                            {author.name}
                           </Link>
                         </>
                         :
@@ -86,13 +95,13 @@ const CategoryTemplate = () => {
                     </p>
                   ))}
                 </div>
-                {document.image ?
+                {/* {document.image ?
                   <div>
                     <img src={document.image.publicURL} style={{ maxWidth: '200px' }} alt="" />
                   </div>
                   :
                   ""
-                }
+                } */}
               </div>
             </li>
           ))}
@@ -104,7 +113,7 @@ const CategoryTemplate = () => {
             <p>No more results</p>
           )}
       </div>
-    </Layout>
+    </>
   )
 }
 

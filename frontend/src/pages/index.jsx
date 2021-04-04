@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Header from '../components/header/header';
+import Header from '../components/header';
 
 const strapi = new Strapi('http://localhost:1337');
 
@@ -33,7 +33,7 @@ class LandingContainer extends React.Component {
   async componentDidMount() {
     try {
       const posts = await strapi.getEntries('posts')
-      this.setState({ posts });
+      this.setState({ posts: posts });
     } 
     catch(err) {
       alert(err);
@@ -84,7 +84,7 @@ class LandingContainer extends React.Component {
                     :
                     ""
                   } */}
-                  <h2 className="text-4xl mb-2">{document.title}</h2>
+                  <h2 className="text-4xl mb-2"><Link to={`/article/${document.title.split(/[\s!"#$%&'()*+,\-./:;<=>?@[\\\]^_‘{|}~]+/).map((a) => a.toLowerCase()).join("-")}`}>{document.title}</Link></h2>
                   {/* <p>
                     {document.author.name}
                   </p> */}
