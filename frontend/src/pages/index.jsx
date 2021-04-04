@@ -75,7 +75,7 @@ class LandingContainer extends React.Component {
           <div>
             <Slider {...settings}>
               {recentArticles.map(document => (
-                <div className="text-center">
+                <div className="text-center" key={document.id}>
                   {/* {document.image
                     ?
                     <div className="">
