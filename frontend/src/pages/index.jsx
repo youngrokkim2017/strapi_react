@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Header from '../components/header';
+// import Header from '../components/header';
 
 const strapi = new Strapi('http://localhost:1337');
 
@@ -69,7 +69,7 @@ class LandingContainer extends React.Component {
     //     ))}
     //   </section>
     <div className="flex flex-col min-h-screen justify-between">
-      <Header data={posts} />
+      {/* <Header data={posts} /> */}
       <main className='container mx-auto px-4 sm:px-6 xl:px-6'>
         <div className="pb-12 mx-auto">
           <div>
