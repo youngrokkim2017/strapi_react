@@ -2,17 +2,19 @@ import React from "react"
 import Strapi from 'strapi-sdk-javascript/build/main'
 import { Link } from 'react-router-dom'
 import ReactMarkdown from "react-markdown"
+// import Header from '../components/header';
 
 const strapi = new Strapi('http://localhost:1337');
 
 class ArticleTemplate extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             posts: [],
             authors: [],
             categories: [],
+            currentArticle: [],
         }
     }
 
@@ -26,29 +28,39 @@ class ArticleTemplate extends React.Component {
             // this.setState({ authors: authorsData });
             // this.setState({ categories: categoriesData });
 
+            let articleIndex = postsData.map(article => {
+                if (article.title === this.props.match.params.articleId.split("-").join(" ")) {
+                    return article.id
+                }
+            })
+  
+            let currentArticleData = await strapi.getEntry('posts', articleIndex.filter(idx => idx !== undefined));
+            // this.setState({ currentArticle: currentArticleData });
+
             this.setState({ 
                 posts: postsData, 
                 authors: authorsData, 
-                categories: categoriesData 
+                categories: categoriesData,
+                currentArticle: currentArticleData,
             });
 
-            // var sidebar = document.getElementById("sidebar");
-            // var element = document.getElementById('metadata');
-            // var bottomPos = element.getBoundingClientRect().bottom + window.scrollY;
+            var sidebar = document.getElementById("sidebar");
+            var element = document.getElementById('metadata');
+            var bottomPos = element.getBoundingClientRect().bottom + window.scrollY;
         
-            // function myScrollFunc() {
-            //   var y = window.scrollY;
-            //   if (y >= bottomPos) {
-            //     sidebar.classList.remove("opacity-0");
-            //     sidebar.classList.add("opacity-1");
-            //     sidebar.classList.add("transition", "duration-500", "ease-in-out");
-            //   } else {
-            //     sidebar.classList.add("opacity-0");
-            //     sidebar.classList.remove("opacity-1");
-            //     sidebar.classList.remove("transition", "duration-500", "ease-in-out");
-            //   }
-            // }
-            // window.addEventListener("scroll", myScrollFunc);
+            function myScrollFunc() {
+              var y = window.scrollY;
+              if (y >= bottomPos) {
+                sidebar.classList.remove("opacity-0");
+                sidebar.classList.add("opacity-1");
+                sidebar.classList.add("transition", "duration-500", "ease-in-out");
+              } else {
+                sidebar.classList.add("opacity-0");
+                sidebar.classList.remove("opacity-1");
+                sidebar.classList.remove("transition", "duration-500", "ease-in-out");
+              }
+            }
+            window.addEventListener("scroll", myScrollFunc);
         } 
         catch(err) {
             alert(err);
@@ -59,8 +71,10 @@ class ArticleTemplate extends React.Component {
     let posts = this.state.posts;
     let authors = this.state.authors;
     let categories = this.state.categories;
+    let currentArticle = this.state.currentArticle;
 
-    console.log(posts, authors, categories)
+    // console.log(posts, authors, categories)
+    console.log(this.props, currentArticle)
 
     function handleDate(e) {
       var d = new Date(e);
@@ -103,15 +117,15 @@ class ArticleTemplate extends React.Component {
 
           <div className='fixed top-0 mt-40 opacity-0 -ml-40 hidden w-36' id="sidebar">
             <div className="leading-5">
-              {/* {posts.author ?
+              {currentArticle.author ?
                 <p className='text-sm'>
-                  By <Link to={`/author/${posts.author.name.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="font-medium underline">
-                    {posts.author.name}
+                  By <Link to={`/author/${currentArticle.author.name.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="font-medium underline">
+                    {currentArticle.author.name}
                   </Link>
                 </p>
                 :
                 ""
-              } */}
+              }
             </div>
           </div>
 
@@ -120,17 +134,17 @@ class ArticleTemplate extends React.Component {
               <div className="border-b border-black pb-8 mb-8">
                 <p className='my-0 tracking-tight text-xl sans-serif items-center'>
                   <span>
-                    {/* {posts.categories[0] ?
-                      <Link to={`/category/${posts.categories[0].title.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="text-black no-underline">
-                        {posts.categories[0].title}
+                    {/* {currentArticle.categories[0] ?
+                      <Link to={`/category/${currentArticle.categories[0].title.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="text-black no-underline">
+                        {currentArticle.categories[0].title}
                       </Link>
                       :
                       ""
                     }
-                    {posts.categories[1] ?
+                    {currentArticle.categories[1] ?
                       <><span className="mx-1">&</span>
-                        <Link to={`/category/${posts.categories[1].title.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="text-black no-underline">
-                          {posts.categories[1].title}
+                        <Link to={`/category/${currentArticle.categories[1].title.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="text-black no-underline">
+                          {currentArticle.categories[1].title}
                         </Link>
                       </>
                       :
@@ -138,51 +152,51 @@ class ArticleTemplate extends React.Component {
                     } */}
                   </span>
                 </p>
-                <h2 className="font-medium mt-2 mb-4 text-4xl leading-tight">{posts.title}</h2>
+                <h2 className="font-medium mt-2 mb-4 text-4xl leading-tight">{currentArticle.title}</h2>
                 <div className="text-base not-italic leading-5" id="metadata">
-                  {posts.author ?
+                  {currentArticle.author ?
                     <p className='mb-2 text-base'>
-                      By <Link to={`/author/${posts.author.name.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="font-medium underline">
-                        {posts.author.name}
+                      By <Link to={`/author/${currentArticle.author.name.split(" ").map((a) => a.toLowerCase()).join("-")}`} className="font-medium underline">
+                        {currentArticle.author.name}
                       </Link>
                     </p>
                     :
                     ""
                   }
                   <p className='my-0'>
-                    {/* {handleDate(posts.published_at)} */}
+                    {/* {handleDate(currentArticle.published_at)} */}
                   </p>
                 </div>
               </div>
               <div className="flex flex-wrap lg:flex-nowrap">
                 <div className="flex-grow flex-shrink-0 prose tracking-normal text-black lg:max-w-2xl w-full mr-8">
                   <div>
-                    {posts.image ?
-                      <img src={posts.image.publicURL} className="featured-img-container mb-8 mt-0 w-full" alt="" />
+                    {currentArticle.image ?
+                      <img src={currentArticle.image.publicURL} className="featured-img-container mb-8 mt-0 w-full" alt="" />
                       :
                       ""
                     }
                   </div>
                   <ReactMarkdown
-                    source={posts.content}
+                    source={currentArticle.content}
                     transformImageUri={uri => uri.startsWith('http') ? uri : `${process.env.IMAGE_BASE_URL}${uri}`}
                   />
                   <div className='mt-12'>
                     <div className="inline-flex items-center space-x-8">
-                      {/* <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&t=${posts.title}`} className="flex items-center space-x-2 no-underline"> */}
+                      {/* <a href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}&t=${currentArticle.title}`} className="flex items-center space-x-2 no-underline"> */}
                       <a href={`https://www.facebook.com/sharer/sharer.php`} className="flex items-center space-x-2 no-underline">
                         <svg width="20" height="20" viewBox="0 0 16 16">
                           <path d="M15.117 0H.883A.883.883 0 0 0 0 .883v14.234c0 .488.395.883.883.883h7.663V9.804H6.461V7.389h2.085V5.61c0-2.067 1.262-3.192 3.106-3.192.883 0 1.642.065 1.863.095v2.16h-1.279c-1.002 0-1.196.476-1.196 1.176v1.541h2.39l-.31 2.415h-2.08V16h4.077a.883.883 0 0 0 .883-.883V.883A.883.883 0 0 0 15.117 0"></path>
                         </svg>
                       </a>
-                      {/* <a href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${posts.title}`} className="flex items-center space-x-2 no-underline"> */}
+                      {/* <a href={`https://twitter.com/intent/tweet?url=${window.location.href}&text=${currentArticle.title}`} className="flex items-center space-x-2 no-underline"> */}
                       <a href={`https://twitter.com/intent/tweet`} className="flex items-center space-x-2 no-underline">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
                         </svg>
                       </a>
-                      {/* <a href={`mailto:?subject=${posts.title}&body=${window.location.href}`} className="flex items-center space-x-2 no-underline"> */}
-                      <a href={`mailto:?subject=${posts.title}`} className="flex items-center space-x-2 no-underline">
+                      {/* <a href={`mailto:?subject=${currentArticle.title}&body=${window.location.href}`} className="flex items-center space-x-2 no-underline"> */}
+                      <a href={`mailto:?subject=${currentArticle.title}`} className="flex items-center space-x-2 no-underline">
                         <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                           <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
@@ -198,7 +212,7 @@ class ArticleTemplate extends React.Component {
                   </div>
                 </div>
                 <div className="flex-grow">
-                  {/* {posts.categories.length === 0 ?
+                  {/* {currentArticle.categories.length === 0 ?
                     <div className="mt-12 lg:mt-0">
                       <h2 className='text-2xl font-medium pb-2 mb-4 border-b border-black leading-none'>
                         Recent Articles
