@@ -11,35 +11,14 @@ const CategoryTemplate = (props) => {
     // const [index, setIndex] = useState(0)
     const [currentCategory, setCurrentCategory] = useState([]);
 
-    // useEffect(() => {
-    //       async function fetchMyAPI() {
-    //     //   let categoryData = await strapi.getEntries('categories');
-    //     //   let authorsData = await strapi.getEntries('authors');
-    //     //   setCategories({ categoryData });
-    //     //   setAuthors({ authorsData });
+    useEffect(() => {
+          async function fetchData() {
+        //   let categoryData = await strapi.getEntries('categories');
+        //   let authorsData = await strapi.getEntries('authors');
+        //   setCategories({ categoryData });
+        //   setAuthors({ authorsData });
 
-    //     let categoriesData = await strapi.getEntries('categories');
-    //     //   let authorsData = await strapi.getEntries('authors');
-    //       setCategories({ categoriesData });
-    //     //   setAuthors({ authorsData });
-
-    //       let categoryIndex = categoriesData.map(cat => {
-    //           if (cat.title === props.match.params.categoryId.split("-").map(ele => ele.charAt(0).toUpperCase() + ele.slice(1)).join(" ")) {
-    //               return cat.id
-    //           }
-    //       })
-    //     //   setIndex({ categoryIndex })
-
-    //       let currentCategoryData = await strapi.getEntry('categories', categoryIndex.filter(idx => idx !== undefined));
-    //       setCurrentCategory({ ...currentCategoryData });
-    //     }
-
-    //     fetchMyAPI()
-    // }, [])
-
-    useEffect(async () => {
-        try {
-          let categoriesData = await strapi.getEntries('categories');
+        let categoriesData = await strapi.getEntries('categories');
         //   let authorsData = await strapi.getEntries('authors');
           setCategories({ categoriesData });
         //   setAuthors({ authorsData });
@@ -53,12 +32,33 @@ const CategoryTemplate = (props) => {
 
           let currentCategoryData = await strapi.getEntry('categories', categoryIndex.filter(idx => idx !== undefined));
           setCurrentCategory({ ...currentCategoryData });
+        }
 
-        }
-        catch(err) {
-          alert(err);
-        }
-    }, [])
+        fetchData()
+    }, [props.match.params.categoryId])
+
+    // useEffect(async () => {
+    //     try {
+    //       let categoriesData = await strapi.getEntries('categories');
+    //     //   let authorsData = await strapi.getEntries('authors');
+    //       setCategories({ categoriesData });
+    //     //   setAuthors({ authorsData });
+
+    //       let categoryIndex = categoriesData.map(cat => {
+    //           if (cat.title === props.match.params.categoryId.split("-").map(ele => ele.charAt(0).toUpperCase() + ele.slice(1)).join(" ")) {
+    //               return cat.id
+    //           }
+    //       })
+    //     //   setIndex({ categoryIndex })
+
+    //       let currentCategoryData = await strapi.getEntry('categories', categoryIndex.filter(idx => idx !== undefined));
+    //       setCurrentCategory({ ...currentCategoryData });
+
+    //     }
+    //     catch(err) {
+    //       alert(err);
+    //     }
+    // }, [])
 
     function handleDate(e) {
       var d = new Date(e);
