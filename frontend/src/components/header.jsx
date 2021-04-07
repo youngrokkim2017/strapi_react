@@ -1,7 +1,7 @@
 import React from "react"
 import Strapi from 'strapi-sdk-javascript/build/main';
 import { Link } from "react-router-dom"
-// import logo from "../images/logo.png"
+import logo from "../images/logo.png"
 
 const strapi = new Strapi('http://localhost:1337');
 
@@ -114,7 +114,7 @@ class Header extends React.Component {
                 </div>
                 <div className="items-center text-center">
                   <Link to="/" className="font-semibold text-2xl tracking-tight">
-                    {/* <img src={logo} alt="Logo" className="h-10 mx-auto" /> */}
+                    <img src={logo} alt="Logo" className="h-10 mx-auto" />
                   </Link>
                 </div>
                 <div className="w-1/4 flex justify-end items-center">
