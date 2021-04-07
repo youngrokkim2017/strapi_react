@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "joins",
+  "info": {
+    "name": "join"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

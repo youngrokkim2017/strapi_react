@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "resources",
+  "info": {
+    "name": "resources"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    }
+  }
+}

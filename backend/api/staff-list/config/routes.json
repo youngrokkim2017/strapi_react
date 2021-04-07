@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/staff-list",
+      "handler": "staff-list.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/staff-list",
+      "handler": "staff-list.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/staff-list",
+      "handler": "staff-list.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

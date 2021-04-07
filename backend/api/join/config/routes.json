@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/join",
+      "handler": "join.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/join",
+      "handler": "join.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/join",
+      "handler": "join.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
