@@ -16,12 +16,23 @@
       "type": "richtext"
     },
     "author": {
-      "via": "posts",
-      "model": "authors"
+      "model": "authors",
+      "via": "posts"
     },
     "categories": {
-      "via": "posts",
-      "collection": "category"
+      "collection": "category",
+      "via": "posts"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
     }
   }
 }

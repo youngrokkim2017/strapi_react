@@ -176,7 +176,7 @@ class Header extends React.Component {
                 <Link to={`/category/life-science`} className="mt-4 lg:inline-block lg:mt-0">
                   Life Science
                 </Link>
-                <Link to={`/category/tech-&-ai`} className="mt-4 lg:inline-block lg:mt-0">
+                <Link to={`/category/technology-&-artificial-intelligence`} className="mt-4 lg:inline-block lg:mt-0">
                   Technology & Artificial Intelligence
                 </Link>
                 <Link to={`/category/the-universe`} className="mt-4 lg:inline-block lg:mt-0">
