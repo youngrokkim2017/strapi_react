@@ -15,6 +15,7 @@ import WriteForUsContainer from './templates/write';
 import SubscribeContainer from './templates/subscribe';
 import ResourcesContainer from './templates/resources';
 import ContactContainer from './pages/contact';
+import SearchContainer from './pages/search';
 
 const App = () => (
   <div>
@@ -31,6 +32,7 @@ const App = () => (
         <Route exact path="/donate-and-subscribe" component={SubscribeContainer} />
         <Route exact path="/writing-resources" component={ResourcesContainer} />
         <Route exact path="/contact" component={ContactContainer} />
+        <Route exact path="/search" component={SearchContainer} />
       </Switch>
       <Footer />
     </BrowserRouter>
